@@ -14,3 +14,6 @@ git commit -m "your comment"
 
 git push origin main
 #Update remote refs along with associated objects
+
+git pull origin main --rebase
+#Synchronize before sending
