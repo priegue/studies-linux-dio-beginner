@@ -1,0 +1,35 @@
+Configurar GitHub com SSH no Ubuntu – Resumo
+
+    Verifique se já existe chave SSH:
+    Comando: ls ~/.ssh
+    Se não houver arquivos como id_ed25519 ou id_rsa, prossiga para o próximo passo.
+
+    Gere uma nova chave SSH:
+    Comando: ssh-keygen -t ed25519 -C "seu-email@exemplo.com"
+    Pressione Enter nas perguntas para usar os padrões.
+
+    Copie a chave pública:
+    Comando: cat ~/.ssh/id_ed25519.pub
+    Copie todo o conteúdo gerado.
+
+    Adicione a chave no GitHub:
+    Acesse: https://github.com/settings/ssh/new
+    Em "Title", adicione um nome.
+    Em "Key", cole a chave copiada e salve.
+
+    Teste a conexão com o GitHub:
+    Comando: ssh -T git@github.com
+    Na primeira vez, digite "yes" se solicitado.
+    Se aparecer a mensagem "You've successfully authenticated", deu certo.
+
+    Verifique o remote atual do repositório Git:
+    Comando: git remote -v
+    Se mostrar um link HTTPS, vá para o próximo passo.
+
+    Altere o remote para usar SSH:
+    Comando: git remote set-url origin git@github.com:usuario/repositorio.git
+    Substitua usuario/repositorio.git pelo caminho real do seu repositório.
+
+Agora o Git usará autenticação via SSH automaticamente, sem pedir usuário e senha.
+
+
