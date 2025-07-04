@@ -1,4 +1,7 @@
 Commands used in the terminal for Git/GitHub
+git --version
+#show the Git version
+
 git status
 #Show the working tree status
 
@@ -17,3 +20,8 @@ git push origin main
 
 git pull origin main --rebase
 #Synchronize before sending
+
+git config --global user.name "username"
+git config --global user.email "youemail@mail.com"
+git config --global credential.helper cache 
+#config acess Github to terminal
