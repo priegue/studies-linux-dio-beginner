@@ -1,2 +1,5 @@
 # studies-linux-dio-beginner
-Repositório para o curso Linux do zero DIO
+Repository for the Linux course from zero DIO
+
+## Useful links
+[Sintaxe básica MarkDown](https://www.markdownguide.org/basic-syntax/)
