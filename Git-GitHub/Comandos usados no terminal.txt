@@ -1,0 +1,22 @@
+Comandos usados no terminal para Git/GitHub
+git --version
+#Mostra a versão do Git
+
+git status
+#Mostra o status do seu repositorio
+
+git clone <seu link SSH>
+#Clona o repositório dentro do diretorio atual
+
+git add . or git add -A
+#Adiciona novos arquivos ou contendo modificações
+#Adiciona todos os arquivos
+
+git commit -m "your comment"
+#Grava as modificações dentro do repositório
+
+git push origin main
+#Atualiza remotamente todos os objets associados da maquina local para o site do Git.
+
+git pull origin main --rebase
+#Sincroniza do site para maquina local
