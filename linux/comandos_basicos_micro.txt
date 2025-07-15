@@ -1,0 +1,92 @@
+Comandos Básicos do Editor Micro (Terminal)
+===========================================
+
+Abrir um arquivo:
+-----------------
+micro nome-do-arquivo.txt
+Se o arquivo não existir, ele será criado automaticamente.
+
+Salvar arquivo:
+---------------
+Ctrl + S
+
+Sair do editor:
+---------------
+Ctrl + Q
+
+Salvar e sair:
+--------------
+Ctrl + S e depois Ctrl + Q
+
+Buscar texto:
+-------------
+Ctrl + F
+Digite o que deseja procurar e pressione Enter.
+
+Mover entre linhas:
+--------------------
+Setas ↑ ↓ ← →
+
+Ir para linha específica:
+-------------------------
+Ctrl + G
+Digite o número da linha e pressione Enter.
+
+Selecionar texto:
+-----------------
+Ctrl + Space (barra de espaço)
+Use as setas para selecionar.
+
+Copiar:
+-------
+Alt + ↑ (seta para cima)
+
+Cortar linha:
+-------------
+Ctrl + K
+
+Colar:
+------
+Ctrl + U
+
+Desfazer:
+---------
+Ctrl + Z
+
+Refazer:
+--------
+Ctrl + Y
+
+Abrir linha acima/abaixo:
+-------------------------
+Alt + Enter
+
+Comando rápido (barra de comando):
+----------------------------------
+Ctrl + E
+Permite digitar comandos internos do micro, como abrir plugins, arquivos, etc.
+
+Abrir lista de arquivos recentes:
+---------------------------------
+Ctrl + E e digite: recent
+
+Ajuda interna:
+--------------
+Ctrl + E e digite: help
+
+Configuração:
+-------------
+As configurações ficam no arquivo:
+~/.config/micro/settings.json
+
+Exemplo de configurações úteis:
+-------------------------------
+{
+  "autoindent": true,
+  "tabsize": 4,
+  "syntax": true
+}
+
+Dica:
+-----
+Micro é uma alternativa mais amigável ao Vim e mais moderna que o Nano.
