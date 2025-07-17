@@ -1,3 +1,11 @@
+Dica:
+-----
+Micro é uma alternativa mais amigável ao Vim e mais moderna que o Nano.
+
+Instalação:
+-----
+apt-get install micro
+
 Comandos Básicos do Editor Micro (Terminal)
 ===========================================
 
@@ -87,6 +95,3 @@ Exemplo de configurações úteis:
   "syntax": true
 }
 
-Dica:
------
-Micro é uma alternativa mais amigável ao Vim e mais moderna que o Nano.

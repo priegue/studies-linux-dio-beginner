@@ -1,0 +1,19 @@
+date
+clear
+pwd
+cd
+ls
+cd ..
+touch
+find
+mkdir
+rmdir
+rm
+--help
+man
+help
+cat
+su
+su
+history
+

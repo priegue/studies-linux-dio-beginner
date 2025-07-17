@@ -1,0 +1,140 @@
+Resumo passo a passo para configurar seu terminal Linux com Zsh, Oh My Zsh, Powerlevel10k, Meslo Nerd Font, e plugins,
+igual ao estilo do minuto 6:32 do vídeo https://www.youtube.com/watch?v=wNQpDWLs4To
+
+1️⃣ Atualizar sistema e instalar Zsh
+-----------------------------------
+Comandos:
+Digite:
+sudo apt update && sudo apt upgrade -y
+Digite:
+sudo apt install zsh -y
+
+2️⃣ Tornar o Zsh o shell padrão
+------------------------------
+Comando:
+Digite:
+chsh -s $(which zsh)
+
+Depois faça logout e login novamente ou rode `zsh` manualmente.
+
+3️⃣ Instalar Oh My Zsh
+---------------------
+Comando:
+Digite:
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+Você deve ver:
+
+Looking for an existing zsh config...
+Using the Oh My Zsh template file and adding it to /home/user/.zshrc.
+
+         __                                     __   
+  ____  / /_     ____ ___  __  __   ____  _____/ /_  
+ / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \ 
+/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / / 
+\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/  
+                        /____/                       ....is now installed!
+
+4️⃣ Instalar tema Powerlevel10k
+------------------------------
+Comando:
+Digite:
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+Depois configure no ~/.zshrc:
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+5️⃣ Configurar .zshrc
+--------------------
+Abra ~/.zshrc e edite:
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+6️⃣ Instalar Nerd Font (MesloLGS NF) manualmente
+-----------------------------------------------
+Baixe e instale a fonte MesloLGS NF em:
+https://github.com/romkatv/powerlevel10k#manual-font-installation
+
+Configure a fonte do terminal para MesloLGS NF Regular nas preferências do terminal.
+
+7️⃣ Rodar `p10k configure`
+-------------------------
+Comando:
+Digite:
+p10k configure
+
+Responda as perguntas conforme estilo do vídeo:
+
+- "Does this look like a diamond (rotated square)?"
+  Escolha: y
+- "What digit is the downwards arrow pointing at?"
+  Escolha: 1 ou 2 ou 3 conforme alinhamento
+- "Do all these icons fit between the crosses?"
+  Escolha: y ou n conforme espaçamento
+- "Prompt Style"
+  Escolha: 2 (Classic)
+- "Character Set"
+  Escolha: 1 (Unicode)
+- "Prompt Color"
+  Escolha: 4 (Darkest)
+- "Show current time?"
+  Escolha: 2 (24-hour format)
+- "Prompt Separators"
+  Escolha: 1 (Angled)
+- "Prompt Heads"
+  Escolha: 3 (Sharp)
+- "Prompt Tails"
+  Escolha: 3 (Sharp)
+- "Prompt Height"
+  Escolha: 2 (Two lines)
+- "Prompt Connection"
+  Escolha: 3 (Solid)
+- "Prompt Frame"
+  Escolha: 4 (Full)
+- "Prompt Spacing"
+  Escolha: 2 (Sparse)
+- "Icons"
+  Escolha: 2 (Many icons)
+- "Prompt Flow"
+  Escolha: 2 (Fluent)
+- "Enable Transient Prompt?"
+  Escolha: y
+- "Instant Prompt Mode"
+  Escolha: 1 (Verbose)
+- "Apply changes to ~/.zshrc?"
+  Escolha: y
+
+8️⃣ Instalar plugins zsh-autosuggestions e zsh-syntax-highlighting
+-----------------------------------------------------------------
+Comandos:
+Digite:
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+Digite:
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+9️⃣ Ativar plugins no ~/.zshrc
+-----------------------------
+Edite ~/.zshrc, localize a linha plugins e configure:
+
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
+Salve e recarregue:
+
+Digite:
+source ~/.zshrc
+
+🔟 Testar o terminal
+-------------------
+Feche e reabra o terminal. O prompt deve mostrar:
+
+- Tema Powerlevel10k com ícones e cores
+- Fonte Meslo Nerd Font aplicada
+- Estilo Matrix preto e verde
+- Plugins autosuggestions e syntax highlighting ativos
+
+Teste comandos para confirmar.
+
+Parabéns! Seu terminal está pronto.
+
