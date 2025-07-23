@@ -3,17 +3,23 @@ clear
 pwd
 cd
 ls
-cd ..
 touch
 find
 mkdir
 rmdir
 rm
---help
 man
 help
 cat
 su
-su
+sudo
 history
+useradd
+userdel
+usermod
+passwd
+groupadd
+groupdel
+gpasswd
+chown
 

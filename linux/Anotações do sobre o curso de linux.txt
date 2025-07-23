@@ -1,0 +1,214 @@
+-----------------------------------
+Anotações do sobre o curso de linux
+-----------------------------------
+
+-- Acesso remoto a maquinas linux:
+windows aplicativo putty, powerShell e windows terminal
+linux serviço openSSH
+
+-- Instalando o serviço openSSH
+prompt@cursoserver:/$ apt-get install openssh-server
+
+-- Acessando pelo serviço openSSH (maquinas de uma mesma rede)
+prompt@cursoserver:/$ ssh usuario@192.168.0.33 (usuario do sistema @ ip do computador)
+
+-- Acessando pelo serviço openSSH (maquinas em serviço de nuvem ex: AWS)
+precisa gerar o certificado .pem
+-- procedimento para gerar chave PEM
+na hora da criação da instancia Ec2, ir na opção "par de chaves" 
+criar novo par de chaves
+dar um nome para essa chave
+tipo de par de chaves (padrão RSA)
+formato de chave privada (PEM)
+criar par de chaves
+--
+
+prompt@cursoserver:/$ ssh -i arquivo.pem usuario@192.168.0.33
+-- Caso o acesso retorne com: 
+"WARNING: UNPROTECTED PRIVATE KEY FILE" permission denied (publickey)
+precisa alterar as permissões do arquivo.pem
+prompt@cursoserver:/$ chmod 600 arquivo.pem (autorizando as permissões o acesso é permitido)
+-- 
+
+-- Descrição do prompt
+prompt@cursoserver:~$ ("usuario do sistema" @ "localhost" : "local onde esta" "usuario com restrições"
+prompt@cursoserver:~# ("usuario do sistema" @ "localhost" : "local onde esta" "super usuario"
+
+-- tecla TAB 2x mostra os diretorios dentro de um determinado caminho
+exemplo:
+prompt@cursoserver:/$ cd /var/lib/"TAB 2x" (mostra todos os diretorios dentro da pasta "lib")
+caso tiver apenas 1 diretorio dentro da pasta o "TAB 2x" já preenche com o nome desse diretorio
+
+-- tecla TAB 1x preenche o resto de nomes de arquivos e diretorios dentro de um determinado caminho
+exemplo:
+prompt@cursoserver:/$ cd /var/lib/up"TAB 1x" (mostra todos os diretorios e arquivos iniciando com up dentro da pasta "lib")
+ 		          ╰─ update-manager/   update-notifier/  upower/
+
+-- | more (exibe o conteúdo que caiba na tela)
+apertando <enter> passa linha a linha
+CRTL + C cancela o comando
+
+-- cd ~ (vai direto para o diretório do usuário)
+
+-- ls (listar arquivos e diretórios)
+- (-l) lista longa
+ |───────|->Permissões            |────────────|->data que foi criado ou modificado
+lrwxrwxrwx   1 root root          8 abr  9 09:06 sbin -> usr/sbin
+╰─link         ╰─usuario dono do arquivo ou diretorio      
+
+drwxr-xr-x   2 root root       4096 abr 15 14:14 srv
+╰─diretório   ╰─2 objetos dentro do diretorio
+                    |──|->grupo    
+-rw-------   1 root root 4014997504 jul 14 18:36 swap.img
+╰─arquivo       ╰─identifica 1 arquivo		 |──────|-> nome do diretório ou arquivo
+
+- (-a) exibe arquivos ocultos
+- (-h) exibe tamanho dos arquvios e diretorios em formato humano
+
+-- ls p* (comando "ls" + "caracter" + "*") 
+- lista todos os diretórios e arquivos que comecem com a o caracter escolhido.
+
+-- ls m?g* (comando "ls" "caracter" + "?" + "caracter" + "*")
+- lista todos os diretórios e arquivos que iniciem com "m" "qualquer caracter" "g" "*"
+
+-- ls teste[1-3]*  (no exemplo o diretório tem os arquivos "teste1.txt / teste2.txt / teste3.txt / teste4.txt / teste5.txt)
+- lista todos os arquivos que iniciem com teste de 1 a 3
+-- ls teste[2,5]*
+- lista todos os arquivos que iniciem com teste 2 e 5
+-- ls teste[^2,5] (^ simbolo de negação)
+- lista todos os arquivos que iniciem com teste menos o 2 e o 5
+-- ls teste[^3-5]
+- lista todos os arquivos que iniciem com teste menos de 3 a 5
+
+-- find -name "nome" (busca um arquivo pelo nome)
+Exemplo:
+prompt@cursoserver: find -name texto
+- (-type f) restringe a busca apenas a arquivos (exclui diretórios, links, etc)
+Exemplo:
+prompt@cursoserver: find /home -type f -name "*.txt" (busca todos os arquivos .txt do diretório home)
+
+-- mkdir 'qualquer nome' (criar diretórios com espaço entre as palavras, tem que ser entre aspas simples'
+Exemplo:
+prompt@cursoserver: mkdir teste
+prompt@cursoserver: mkdir 'meu teste'
+
+-- rm (excluir arquivos)
+- (-r) recusivo
+- (-f) força a exclusão
+- (-v) exibe o que esta sendo feito no momento
+- (-i) pergunta se deseja excluir o arquivo
+Exemplo:
+prompt@cursoserver: rm -rfvi diretório ou arquivo
+
+
+-- help / man
+- man (vem antes do comando)
+- (--help) vem depois do comando
+Exemplo:
+prompt@cursoserver: man cd
+prompt@cursoserver: ls --help
+
+
+-- mudar senha do root
+- sudo passwd root
+Exemplo:
+prompt@cursoserver: sudo passwd root
+
+-- acesso remoto como root
+- editar o arquivo /etc/ssh/sshd_config
+mudar a linha #PermitRootLogin prohibit-password
+para PermitRootLogin yes
+- reboot o sistema ou restart o serviço sshd
+
+-- history (historico de comandos de um usuário)
+- (30) lista os ultimos 30 comandos / (3) lista os ultimos 3 comandos
+- (!10) executa o comando executado de numero 10 da lista do history
+- (!!) executa o ultimo comando utilizado
+- (!?dat?) busca um determinado termo no history (no exemplo ele vai achar o comando date e executa automaticamente)
+-- (history | grep "texto") - (consulta um termo ou comando conforme o "texto" digitado) - "grep - como para buscar padrões"
+- Para exibição da data e hora no history, tem que mudar a variavel de ambiente do SO.
+Exemplo:
+prompt@cursoserver:/$ export HISTTIMEFORMAT="%c "
+- (-c) apaga todo o historico
+
+-- Para parar de gravar o historico tem mudar o parametro do bash/terminal
+Exemplo:
+prompt@cursoserver:/$ set +o history (para reverter (-o))
+
+-- Para mudar a quantidade de comandos armazenados tem que alterar o arquivo oculto .bashrc na pasta do usuário.
+- mudar a linha HISTSIZE=1000 (mudar para a quantidade desejada)
+
+-- (-w) Para armazenar o historico em um arquivo (arquivo é salvo na pasta do usuário .bash_history)
+- Para mudar o tamanho maximo do arquivo .bash_history,
+  tem que alterar no arquivo .bashrc na linha HISTFILESIZE=2000 (mudar para a quantidade desejada)
+
+-- useradd (cria usuários no sistema)
+- (-m) cria o diretório home do usuário
+- (-c "texto") coloca um comentário - (geralmente é o nome do usuário)
+- (-s /bin/bash)) indica qual o bash desse novo usuário
+- (-e 00/00/0000) cria um usuário com data de expiração
+- (-p $(openssl passwd -crypt senha)) cria senha criptografada [ubuntu 24.04]
+- (printf 'usuario:senha' | chpasswd) cria senha criptografada [ubuntu 25.04]
+- (-G) cria o usuário já direcionando para varios grupos (-g) cria o usuário já direcionando para um grupo
+
+Exemplo:
+prompt@cursoserver:/$ useradd rebeca -m -c "minha filha" -s /bin/bash -e 22/07/2025 -p $(openssl passwd -crypt senha)
+prompt@cursoserver:/$ useradd rebeca -m -c "minha filha" -s /bin/bash -e 22/07/2025 -G grupoteste && printf 'rebeca:senha' | chpasswd
+
+-- userdel (deleta usuários do sistema)
+- (-r) remove o diretório home do usuário
+- (-f) força a remoção do usuário
+Exemplo:
+prompt@cursoserver:/$ userdel -rf rebeca
+
+-- passwd (cria senha para um determinado usuário do sistema)
+- Arquivo de informações dos usuários do sistema (/etc/passwd)
+Exemplo:
+prompt@cursoserver:/$ passwd rebeca
+- (-e 00/00/0000) data de expiração da senha ou (-e) no primeiro acesso o usuário precisará troca de senha)
+Exemplo:
+prompt@cursoserver:/$ passwd rebeca -e 23/07/2025
+prompt@cursoserver:/$ passwd rebeca -e
+
+-- usermod (faz alterações no usuário)
+Exemplo:
+prompt@cursoserver: usermod rebeca -s /bin/bash
+- (-G) adiciona o usuário para varios grupos (-g) adicioona o usuário para um grupo
+Exemplo:
+prompt@cursoserver: usermod -G adm,sudo usuario1
+
+-- groupadd (cria grupos no sistema)
+- Arquivo de informações dos grupos do sistema (/etc/group)
+Exemplo:
+prompt@cursoserver: groupadd testegrupo
+
+-- groupdel (apaga grupos do sistema)
+Exemplo:
+prompt@cursoserver: groupdel testegrupo
+
+-- gpasswd (opções/ajustes de grupos)
+- (-d) remove usuário do grupo
+- (-a) adiciona usuário ao grupo
+Exemplo:
+prompt@cursoserver: gpasswd -d usuario testegrupo
+
+-- chown (altera o dono/grupo de diretorios e arquivos)
+Exemplo:
+prompt@cursoserver: chown usuario:grupo diretorio
+prompt@cursoserver: chown diego:jogos /home/priegue/jogos
+
+-- chmod (altera permissões de diretórios e arquivos)
+- Leitura (R) - 4
+- Gravação (w) - 2
+- execução (x) - 1
+- nenhuma (-) - 0
+
+Exemplo:
+prompt@cursoserver: chmod dono grupo outros diretorio
+prompt@cursoserver: chmod   7    5     0     /home/priegue/jogos
+prompt@cursoserver: chmod 750 /home/priegue/jogos
+
+- (+x) já tribui execução ao dono - (-x) remove a execução
+Exemplo:
+prompt@cursoserver: chmod +x teste.sh
+
