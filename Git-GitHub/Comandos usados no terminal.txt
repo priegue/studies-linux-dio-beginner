@@ -2,6 +2,15 @@ Comandos usados no terminal para Git/GitHub
 git --version
 #Mostra a versão do Git
 
+ssh-keygen -t ed25519 -C seu-email@exemplo.com (e-mail cadastrado no github) <enter>
+<enter> para aceitar o caminho padrão
+#gera chave ssh
+cat ~/.ssh/id_ed25519.pub
+#visualizar a chave ssh
+ssh -T git@github.com
+yes
+#Testar a conexão com o GitHub via SSH
+
 git status
 #Mostra o status do seu repositorio
 
