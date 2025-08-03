@@ -22,4 +22,4 @@ groupadd
 groupdel
 gpasswd
 chown
-
+chmod

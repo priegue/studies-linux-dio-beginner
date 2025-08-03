@@ -211,4 +211,3 @@ prompt@cursoserver: chmod 750 /home/priegue/jogos
 - (+x) já tribui execução ao dono - (-x) remove a execução
 Exemplo:
 prompt@cursoserver: chmod +x teste.sh
-
