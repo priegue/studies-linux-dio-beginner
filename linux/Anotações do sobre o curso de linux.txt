@@ -60,7 +60,7 @@ drwxr-xr-x   2 root root       4096 abr 15 14:14 srv
 ╰─diretório   ╰─2 objetos dentro do diretorio
                     |──|->grupo    
 -rw-------   1 root root 4014997504 jul 14 18:36 swap.img
-╰─arquivo       ╰─identifica 1 arquivo		 |──────|-> nome do diretório ou arquivo
+╰─arquivo    ╰─identifica 1 arquivo         		 |──────|-> nome do diretório ou arquivo
 
 - (-a) exibe arquivos ocultos
 - (-h) exibe tamanho dos arquvios e diretorios em formato humano
@@ -211,3 +211,144 @@ prompt@cursoserver: chmod 750 /home/priegue/jogos
 - (+x) já tribui execução ao dono - (-x) remove a execução
 Exemplo:
 prompt@cursoserver: chmod +x teste.sh
+
+GERENCIAMENTO DE PACOTES (UBUNTU/DEBIAN)
+-- apt (instalação/desinstalação/gerenciamentos de pacotes)
+-- apt-get (usado mais em scripts)
+
+apt list --installed (verifica softwares instalados na maquina)
+apt list --upgradeable (verifica se existe atualizações para os softwares instalados na maquina)
+apt search samba (faz uma busca por um determinado software, no exemlo é o samba)
+apt install net-tools (instala o software especifico, no exemplo é o net-tools)
+apt remove net-tools (remove o software especifico, no exemplo é o net-tools)
+apt edit-sources (edita a lista de repositórios)
+apt update (lista as atualizações dos pacotes disponiveis)
+apt upgrade (atualiza os pacotes disponiveis para atualização)
+
+GERENCIAMENTO DE PACOTES (REDHAT-CENTOS)
+-- dnf
+-- yum
+
+* mesmo comandos do ubuntu
+dnf install net-tools
+dnf list --installed
+
+INSTALAÇÃO DE ARQUIVOS .DEB 
+
+apt install ./nomedoarquivo.deb
+
+INSTALAÇÃO DE ARQUIVOS .RPM
+
+dnf install ./nomedoarquivo.rpm
+
+GERENCIAMENTO DE DISCOS
+
+lsblk (lista todos os discos do pc e os diretórios onde estão  montados)
+fdisk -l (lista todos os discos do pc)
+
+--criação de partição
+
+fdisk /dev/sdb
+(dispositivos sempre ficam na pasta "dev")
+(discos sempre são indicados por letra, ex. sda sdb sdc sdd...)
+(as patições sempre são indicados por numeros, ex. sda1 sda2 sdb1 sdb2...)
+--comandos do fdisk
+m (ajuda)
+n (cria nova partição)
+p (partição primária)
+w (salva)
+
+--formatando partição
+mkfs.ext4 /dev/sdb
+(caso queira o sistema de arquivos em ext3, basta alterar para mkfs.ext3)
+
+--montando disco
+(os discos montados por padrão ficam no dioretório /mnt)
+(criar uma pasta dentro do /mnt com o nome do disco que desejar)
+mount /dev/sdb /mnt/nomedodiretoriocriado
+--desmontar o disco
+umount /dev/sdb
+
+--MONTAGEM DO DISCO AUTOMATICAMENTE AO LIGAR O PC
+--o arquivo fstab onde se edita se encontra em /etc
+nano /etc/fstab
+--adicionar a linha no arquivo
+/dev/sdb /mnt/nomedodiretorio defaults 0 0
+
+--MANIPULANDO ARQUIVOS
+--copiando arquivos
+-- cp
+cp "parametro" "origem" nomedoarquivo "destino"
+exemplo
+cp -i /home/priegue/imagem.jpg /mnt/disk2
+
+-paramêtros
+-i (pergunta se quer sobreescrever quando o mesmo arquivo está no diretorio)
+-R (copia arquivos e pastas)
+-v (descreve na tela o que esta sendo feito)
+
+--movendo arquivos
+-- mv
+mv "parametro" "origem" nomedoarquivo "destino"
+exemplo
+mv -i /home/priegue/imagem.jpg /mnt/disk2
+
+-paramêtros
+-i (pergunta se quer sobreescrever quando o mesmo arquivo está no diretorio)
+-v (descreve na tela o que esta sendo feito)-usado para renomear arquivos
+
+--PROCESSOS
+-- ps
+-paramêtros
+a (mostra o processo de todos os usuários)
+u (fornece o nome do usuário que iniciou o processo)
+x (mostra os processos executados fora do console)
+ex.
+ps aux
+
+-- kill
+kill "numerodaid"
+killall "nomedoprocesso" (fecha todos os processos que tenham o nome escolhido)
+kill "pindousuario" (desconecta o usuário daquele determinado pin)
+ex.
+kill 1234
+killall chrome
+kill 4321
+
+-- w (mostra quais os usuários que estão logados no momento dentro do sistema)
+-- who -a (mostra o pin do usuários logados no sistema)
+
+--CRIANDO SERVIDOR DE ARQUIVOS SAMBA
+- o protocolo de compartilhamento de arquivos no windows é smb. "samba" software linux para esse compartilhamento.
+- instalar o software samba
+apt install samba -y
+- definir a pasta a ser compartilhada no samba
+nano /etc/samba/smb.conf
+
+[publica] --- nome da pasta compartilhada
+path = /mnt/disktest/publica --- caminho onde esta a pasta a ser compartilhada
+writable = yes --- libera gravação na pasta compartilhada por qualquer usuário
+guest ok = yes --- qualquer usuário tem acesso a pasta
+guest only = yes --- qualquer usuário que acessar a pasta será um convidado
+
+-- quando se altera um arquivo de configuração, tem que restartar o serviço
+-- o samba é um serviço e é executado em segundo plano (ouvindo requisições)
+esse tipo de serviço em segundo plano é chamdo de "daemon"
+-- para iniciar,reiniciar e fechar serviços em segundo plano usa-se o comando "systemctl"
+systemctl restart smbd -- (quando um serviço é de segundo plano no final do nome do serviço acrescenta a letra "d" de daemon)
+-- para verificar o status de serviços em segundo plano
+systemctl status smbd
+-- para que o serviço suba automaticamente quando o pc for ligado usa-se
+systemctl enable smdb 
+-- quando o dono do arquivo for "nobody" e dono do grupo for "nogroup" significa que qualquer usuario da rede pode ter acesso 777 a esse arquivo.
+
+--CRIANDO SERVIDOR WEB
+- a aplicação a ser instalada para o servidor web é "apache2"
+apt install apache2
+- caso queira consultar se o serviço apache esta rodando, usar o systemctl
+- por padrão o index.html esta em /var/www/html/
+- para visualisar a pagina basta colocar no navegador o endereço ip do seu servidor
+
+--CRIANDO SERVIDOR DE BANCO DE DADOS
+
+
