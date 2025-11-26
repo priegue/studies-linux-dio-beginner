@@ -350,5 +350,19 @@ apt install apache2
 - para visualisar a pagina basta colocar no navegador o endereço ip do seu servidor
 
 --CRIANDO SERVIDOR DE BANCO DE DADOS
+- a aplicação a ser instalada para o banco de dados é "mysql-server-8.0"
+apt install mysql-server-8.0
+- para acessar o banco de dados mysql como root usa-se
+mysql -u root -p
+
+--comandos dentro para dentro do mysql
+show databases; (lista todos os bancos de dados)
+-sempre usar o ; no final de cada comando
+create database "meubanco"; (cria um banco de dados com o nome escolhido sem aspas)
+use "meubanco"; (para utulizar o banco de dados escolhido sem aspas)
+create table "pessoas" (Pessoaid int, Nome varchar(50), Sobrenome varchar(50), Endereco varchar(100), Cidade varchar(50)); (cria uma tabela de nome escolhido sem aspas e suas colunas)
+insert into pessoas (Pessoaid, Nome, Sobrenome, Endereco, Cidade) VALUES (1, 'Diego', 'Priegue', 'Trav. Angustura', 'Belem-SP'); (inserção de dados na tabela pessoas)
+select * from "pessoas"; (exibe o conteúdo da tabela pessoas sem aspas)
+-para sair do prompt mysql usa-se o comando "exit"
 
 
