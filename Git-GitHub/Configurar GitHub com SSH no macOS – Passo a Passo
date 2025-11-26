@@ -1,0 +1,74 @@
+Configurar GitHub com SSH – Ubuntu e macOS – Passo a Passo Completo
+
+Verifique se já existe uma chave SSH:
+Abra o Terminal e digite:
+ls -al ~/.ssh
+
+Veja se há arquivos como id_ed25519 ou id_rsa.
+Se não houver, siga para o próximo passo.
+Gere uma nova chave SSH:
+
+No Terminal, digite:
+ssh-keygen -t ed25519 -C "seu-email@exemplo.com"
+Pressione Enter em todas as perguntas para aceitar os padrões.
+A chave será salva em ~/.ssh/id_ed25519.
+
+Dica: se seu macOS for antigo e não suportar ed25519, use: -t rsa -b 4096
+Inicie o agente SSH:
+
+Ubuntu:
+Digite:
+eval "$(ssh-agent -s)"
+
+macOS (se der erro no ssh-agent):
+Digite:
+mkdir -p ~/.ssh/tmp && SSH_AUTH_SOCK=~/.ssh/tmp/ssh-agent.sock ssh-agent -a ~/.ssh/tmp/ssh-agent.sock
+
+Você verá algo como:
+Agent pid 1234
+Adicione a chave ao agente:
+
+Ubuntu:
+ssh-add ~/.ssh/id_ed25519
+macOS:
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+Se aparecer a mensagem Identity added: ..., significa que foi adicionado corretamente.
+
+Copie a chave pública:
+Ubuntu e macOS:
+Para copiar direto para o clipboard (macOS):
+pbcopy < ~/.ssh/id_ed25519.pub
+
+Para apenas visualizar:
+cat ~/.ssh/id_ed25519.pub
+Copie o conteúdo completo da chave.
+
+Adicione a chave no GitHub:
+Acesse: https://github.com/settings/ssh/new
+Em "Title": coloque algo como "Ubuntu pessoal" ou "iMac pessoal"
+Em "Key": cole a chave copiada
+Clique em "Add SSH key"
+
+Teste a conexão com o GitHub:
+Digite:
+ssh -T git@github.com
+
+Na primeira vez, digite yes.
+
+Se aparecer a mensagem:
+Hi seu-usuario! You've successfully authenticated, but GitHub does not provide shell access.
+Está tudo certo com sua autenticação SSH.
+
+Configure sua identidade no Git (obrigatório para commits):
+Digite:
+git config --global user.name "Seu Nome"
+git config --global user.email "seu@email.com"
+
+Para confirmar:
+git config --list
+Você deve ver algo como:
+user.name=Seu Nome
+user.email=seu@email.com
+
+Dica: use o mesmo e-mail cadastrado no GitHub para associar os commits à sua conta.
